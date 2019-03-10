@@ -1,0 +1,21 @@
+.post-list {
+    width: 600px;
+    
+    display: flex;
+  }
+
+.icon-post {
+    padding: 20px;
+}
+
+.order-menu {
+    padding: 20px;
+}
+
+.category-menu {
+    padding: 20px;
+}
+
+.container {
+    padding: 20px;
+}
