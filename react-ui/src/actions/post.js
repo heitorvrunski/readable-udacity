@@ -2,7 +2,11 @@ import {
     getAllPosts,
     getAllPostsByCategory,
     votePost,
-    deletePost
+    deletePost,
+    addPost,
+    getAllComments,
+    getPost,
+    editPost
 } from '../api';
 
 
@@ -11,6 +15,9 @@ export const GET_POSTS_CATEGORY = 'GET_POSTS_CATEGORY'
 export const UP_VOTE_POST = 'UP_VOTE_POST';
 export const DOWN_VOTE_POST = 'DOWN_VOTE_POST';
 export const DELETE_POST = 'DELETE_POST';
+export const ADD_POST = 'ADD_POST'
+export const EDIT_POST = 'EDIT_POST'
+export const GET_POST = 'GET_POST'
 
 export function fetchPosts() {
     return (dispatch) => {
@@ -23,6 +30,22 @@ function getPosts(posts) {
     return {
         type: GET_POSTS,
         posts,
+    }
+}
+
+export const fetchPost = id => dispatch =>
+    getPost(id)
+        .then(post =>
+            getAllComments(post.id)
+                .then(comments => (post.comments = comments))
+                .then(() => post)
+        )
+        .then(post => dispatch(getPostId(post)))
+
+function getPostId(post) {
+    return {
+        type: GET_POST,
+        post,
     }
 }
 
@@ -40,6 +63,34 @@ function getPostsByCategory(posts, category) {
         category,
     }
 }
+
+export const addPostNew = data => dispatch =>
+    addPost(data)
+        .then(post =>
+            getAllComments(post.id)
+                .then(comments => (post.comments = comments))
+                .then(() => post)
+        )
+        .then(post => dispatch(postsById(post)))
+
+export const postsById = (post) => ({
+    type: ADD_POST,
+    post
+})
+
+export const editPostId = (data, id) => dispatch =>
+    editPost(data, id)
+        .then(post =>
+            getAllComments(post.id)
+                .then(comments => (post.comments = comments))
+                .then(() => post)
+        )
+        .then(post => dispatch(postsEditById(post)))
+
+export const postsEditById = (post) => ({
+    type: EDIT_POST,
+    post
+})
 
 export const deletePostId = (id) => dispatch => (
     deletePost(id)

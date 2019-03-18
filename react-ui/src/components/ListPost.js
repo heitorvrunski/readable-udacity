@@ -6,11 +6,8 @@ import { fetchPosts } from '../actions/post'
 
 class ListPost extends Component {
     componentWillMount() {
-        const { category } = this.props.match.params
-        console.log(category)
-
         this.props.dispatch(fetchPosts())
-        
+
     }
 
     render() {
@@ -28,32 +25,32 @@ class ListPost extends Component {
 
 
 function mapStateToProps({ posts, activeScreen }, { order }) {
-    
+
     activeScreen = activeScreen === 'home' ? null : activeScreen
-    console.log(activeScreen)
     switch (order) {
         case 'timestamp':
             return {
                 postsIds: Object.keys(posts)
-                    .sort((a, b) => posts[b].timestamp - posts[a].timestamp),
+                    .sort((a, b) => posts[b].timestamp - posts[a].timestamp)
+                    .filter((p) => activeScreen !== null ? posts[p].category === activeScreen : posts[p]),
                 activeScreen
             }
         case 'vote':
             return {
-                postsIds:  Object.keys(posts)
-                    .sort((a, b) => posts[b].voteScore - posts[a].voteScore),
+                postsIds: Object.keys(posts)
+                    .sort((a, b) => posts[b].voteScore - posts[a].voteScore)
+                    .filter((p) => activeScreen !== null ? posts[p].category === activeScreen : posts[p]),
                 activeScreen
             }
         default:
             return {
-                postsIds:  Object.keys(posts).filter((p) => activeScreen !== null ? posts[p].category === activeScreen : posts[p]),
+                postsIds: Object.keys(posts)
+                .filter((p) => activeScreen !== null ? posts[p].category === activeScreen : posts[p]),
                 activeScreen
 
             }
     }
 
 }
-
-
 
 export default connect(mapStateToProps)(ListPost)

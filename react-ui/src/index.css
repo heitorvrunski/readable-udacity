@@ -17,5 +17,17 @@
 }
 
 .container {
-    padding: 20px;
+    background: rgb(236, 236, 236)
+}
+
+.bg-gray {
+    background: rgb(236, 236, 236)
+}
+
+.bg {
+    background: lightblue
+}
+
+.textArea {
+    width: 100%;
 }

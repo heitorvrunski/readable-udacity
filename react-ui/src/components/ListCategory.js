@@ -5,11 +5,13 @@ import { Menu } from 'semantic-ui-react'
 import Nav from './Nav'
 import { setScreen } from '../actions/nav'
 import { Link } from 'react-router-dom'
+import { fetchCategories } from '../actions/category'
 
 class ListCategory extends Component {
     componentWillMount() {
         const { category } = this.props.match.params
         const { dispatch } = this.props
+        dispatch(fetchCategories())
         if (category)
             dispatch(setScreen(category))
     }
@@ -21,18 +23,18 @@ class ListCategory extends Component {
     render() {
         const { activeScreen } = this.props
         return (
-            <Menu pointing>
+            <Menu inverted color='blue'>
                 <Nav />
                 {this.props.categoriesIds.map((id) => (
                     <Category key={id} id={id} />
                 ))}
                 <Menu.Menu position='right'>
                     <Menu.Item
-                     name='new'
-                     active={activeScreen === 'new'}
-                     onClick={(e) => this.handleItemClick(e)}
-                     as={ Link }
-                     to='/new'>
+                        name='new'
+                        active={activeScreen === 'new'}
+                        onClick={(e) => this.handleItemClick(e)}
+                        as={Link}
+                        to='/new'>
                         New Post
                     </Menu.Item>
                 </Menu.Menu>
@@ -42,7 +44,7 @@ class ListCategory extends Component {
 }
 
 function mapStateToProps({ categories, activeScreen }) {
-    
+
     return {
         categoriesIds: Object.keys(categories),
         activeScreen

@@ -15,10 +15,12 @@ class Nav extends Component {
   render() {
     const { activeScreen } = this.props
     return (
-      <Menu.Item name={'home'}
-      active={activeScreen === 'home'}
-      onClick={(e) => this.handleItemClick(e)}
-      as={Link} to='/home'>
+      <Menu.Item 
+        name={'home'}
+        active={activeScreen === 'home'}
+        onClick={(e) => this.handleItemClick(e)}
+        as={Link} to='/home'
+      >
       </Menu.Item>
     )
   }
@@ -27,7 +29,7 @@ class Nav extends Component {
 function mapStateToProps({ categories, activeScreen }, { id }) {
   const category = categories[id]
   return {
-      category: category,
+      category,
       activeScreen
   }
 }

@@ -1,34 +1,39 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ListPost from './ListPost'
-import { fetchCategories } from '../actions/category'
 import ListCategory from './ListCategory';
-import { Button } from 'semantic-ui-react'
+import { Button, Container, Dimmer, Loader } from 'semantic-ui-react'
 
 
 class Homepage extends Component {
     state = {
-        order: ''
+        order: '',
+        loading: true
     }
     componentDidMount() {
-        this.props.dispatch(fetchCategories())
+        this.setState(() => ({
+            loading: false
+        }))
     }
-    handleOrder = (e,type) => {
+
+    handleOrder = (e, type) => {
         e.preventDefault()
         this.setState(() => ({
             order: type
         }))
     }
     render() {
-        const { order } = this.state
+        const { order, loading } = this.state
         return (
-            <div>
+            <Container className='container'>
+                <Dimmer active={loading}>
+                    <Loader />
+                </Dimmer>
                 <div className='category-menu'>
                     <ListCategory {...this.props} />
                 </div>
                 <div className='order-menu'>
-                    <b>Order by :</b>
-                    <Button.Group size='large'>
+                    <Button.Group size='large' color='blue'>
                         <Button onClick={(e) => this.handleOrder(e, 'timestamp')}>Timestamp</Button>
                         <Button.Or />
                         <Button onClick={(e) => this.handleOrder(e, 'vote')}>Vote Score</Button>
@@ -37,7 +42,7 @@ class Homepage extends Component {
                 <div>
                     <ListPost order={order} {...this.props} />
                 </div>
-            </div>
+            </Container>
         )
     }
 }

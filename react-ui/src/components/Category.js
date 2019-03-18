@@ -39,7 +39,7 @@ class Category extends Component {
 function mapStateToProps({ categories, activeScreen }, { id }) {
     const category = categories[id]
     return {
-        category: category,
+        category,
         activeScreen
     }
 }
