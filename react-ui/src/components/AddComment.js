@@ -6,7 +6,6 @@ import { Card,
          Label } from 'semantic-ui-react';
 import { connect } from 'react-redux'
 import { addCommentNew } from '../actions/comment';
-
 const uuidv1 = require('uuid/v1')
 
 class AddComment extends Component {

@@ -32,10 +32,6 @@ class PostDetail extends Component {
 
         dispatch(voteScoreDown(post.id))
     }
-    handleDelete = (e) => {
-        e.preventDefault()
-
-    }
     handleItemClick = (e) => {
         //e.preventDefault()
         const { dispatch } = this.props

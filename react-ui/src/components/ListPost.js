@@ -6,10 +6,8 @@ import { fetchPosts } from '../actions/post'
 
 class ListPost extends Component {
     componentWillMount() {
-        this.props.dispatch(fetchPosts())
-
+        this.props.getPosts()
     }
-
     render() {
         return (
 
@@ -53,4 +51,12 @@ function mapStateToProps({ posts, activeScreen }, { order }) {
 
 }
 
-export default connect(mapStateToProps)(ListPost)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getPosts: () => {
+        dispatch(fetchPosts())
+      }
+    }
+  }
+
+export default connect(mapStateToProps,mapDispatchToProps)(ListPost)
